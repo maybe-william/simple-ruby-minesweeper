@@ -34,7 +34,14 @@ def printBoard(b)
 		b[x].length.times do
 			|y|
 			if b[x][y][1] then
-				print(b[x][y][0])
+				if x == @@lastGuess[0] and y == @@lastGuess[1] then
+					print("\e[44m")
+					print("\e[30m")
+					print(b[x][y][0])
+					print("\e[0m")
+				else
+					print(b[x][y][0])
+				end
 				print(" ")
 			else
 				print('# ')
@@ -117,6 +124,7 @@ end
 
 def guess(b, x, y)
 	#return true if guess is good, false if mine
+	@@lastGuess = [x, y]
 	if b[x][y][0] == 'x' then
 		b[x][y][1] = true
 		return false
