@@ -1,16 +1,8 @@
 #!/usr/bin/ruby
-#ask for board size
-#LOOP:
-#print board
-#print prompt
-#accept two integers x, y
-#if x, y is open, say so, repeat
-#else, reveal x, y
-#if mine, lose repeat board size, else, print number
-#repeat
-#
 
 @@board = []
+
+@@lastGuess = [-1, -1]
 
 def board(set=false, x=3, y=3, mines=0.5)
 	#return the board (basically a global variable)
@@ -53,7 +45,7 @@ def printBoard(b)
 end
 
 def showExtraSquares(b, x, y)
-	#get the num of mines around
+	#show any connected number squares
 	b[x][y][1] = true
 	x1 = x-1
 	y1 = y-1
@@ -112,7 +104,16 @@ def won()
 	return true
 end
 
-
+def uncover_all(b)
+	b.each do
+		|row|
+		row.each do
+			|elem|
+			elem[1] = true
+		end
+	end
+	return b
+end
 
 def guess(b, x, y)
 	#return true if guess is good, false if mine
@@ -154,21 +155,20 @@ def guess_loop()
 	end
 	if !win then
 		puts "You Lose!"
-		board().each do
-			|row|
-			row.each do
-				|elem|
-				elem[1] = true
-			end
-		end
-		printBoard(board())
 	else
 		puts "You Win!"
 	end
+
+
+	uncover_all(board())
+	printBoard(board())
 end
 
 def main_loop()
 	while true do
+		puts
+		puts "---------------NEW GAME---------------"
+		puts
 		#initialize game and offer to play again
 		puts "Please enter x dimension:"
 		x = gets.chomp.to_i
