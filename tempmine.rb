@@ -1,0 +1,197 @@
+#!/usr/bin/ruby
+#ask for board size
+#LOOP:
+#print board
+#print prompt
+#accept two integers x, y
+#if x, y is open, say so, repeat
+#else, reveal x, y
+#if mine, lose repeat board size, else, print number
+#repeat
+#
+
+@@board = []
+
+def board(set=false, x=3, y=3, mines=0.5)
+	#return the board (basically a global variable)
+	#if set is true, generate a random board of x and y dimensions.
+	board = @@board
+	if set then
+		@@board = []
+		x.times do
+			|time|
+			row = []
+			y.times do
+				|yind|
+				if Random.rand < mines then
+					row << ['x', false]
+				else
+					row << ['o', false]
+				end
+			end
+			@@board << row
+		end
+	end
+	return board
+end
+
+def printBoard(b)
+	#print out a board
+	b.length.times do
+		|x|
+		b[x].length.times do
+			|y|
+			if b[x][y][1] then
+				print(b[x][y][0])
+				print(" ")
+			else
+				print('# ')
+			end
+		end
+		puts
+	end
+end
+
+def showExtraSquares(b, x, y)
+	#get the num of mines around
+	b[x][y][1] = true
+	x1 = x-1
+	y1 = y-1
+	x2 = x+1
+	y2 = y+1
+	if x1 >= 0 and b[x1][y][0] != 'x' and b[x1][y][1] == false then
+		showExtraSquares(board(), x1, y)
+	end
+	if x2 < b.length and b[x2][y][0] != 'x' and b[x2][y][1] == false then
+		showExtraSquares(board(), x2, y)
+	end
+	if y1 >= 0 and b[x][y1][0] != 'x' and b[x][y1][1] == false then
+		showExtraSquares(board(), x, y1)
+	end
+	if y2 < b[x].length and b[x][y2][0] != 'x' and b[x][y2][1] == false then
+		showExtraSquares(board(), x, y2)
+	end
+	return
+end
+
+def calcNum(b, x, y)
+	#get the num of mines around
+	num = 0
+	3.times do
+		|x1|
+		3.times do
+			|y1|
+			x1 = x1-1
+			y1 = y1-1
+			x2 = x + x1
+			y2 = y + y1
+			if x2 >= 0 and x2 < b.length then
+				if y2 >= 0 and y2 < b[x2].length then
+					if b[x2][y2][0] == 'x' then
+						num = num + 1
+					end
+				end
+			end
+		end
+	end
+
+	return num
+end
+
+def won()
+	#return true if only xs are still hidden
+	board().each do
+		|row|
+		row.each do
+			|item|
+			if item[0] != 'x' and item[1] == false then
+				return false
+			end
+		end
+	end
+	return true
+end
+
+
+
+def guess(b, x, y)
+	#return true if guess is good, false if mine
+	if b[x][y][0] == 'x' then
+		b[x][y][1] = true
+		return false
+	else
+		b[x][y][0] = calcNum(b, x, y)
+		showExtraSquares(b, x, y)
+		b[x][y][1] = true
+		return true
+	end
+end
+
+def guess_loop()
+	#after game is initialized, loop asking for a guess each time. lose when guess is mine.
+	safe = true
+	win = false
+	printBoard(board())
+
+	while safe do
+		puts "Please give an x and a y separated by a space:"
+		vals = gets().chomp.split
+		y = vals[0].to_i
+		x = vals[1].to_i
+		if x >= 0 and x < board().length and y >= 0 and y < board()[0].length then
+			safe = guess(board(), x, y)
+			
+			puts
+			printBoard(board())
+			puts
+		if safe then
+				if won() then
+					win = true
+					break
+				end
+			end
+		end
+	end
+	if !win then
+		puts "You Lose!"
+		board().each do
+			|row|
+			row.each do
+				|elem|
+				elem[1] = true
+			end
+		end
+		printBoard(board())
+	else
+		puts "You Win!"
+	end
+end
+
+def main_loop()
+	while true do
+		#initialize game and offer to play again
+		puts "Please enter x dimension:"
+		x = gets.chomp.to_i
+		puts "Please enter y dimension:"
+		y = gets.chomp.to_i
+		mine = 2.0
+		while mine > 1 do
+			puts "Please enter mine proportion as a float:"
+			mine = gets.chomp.to_f
+		end
+
+		board(true, y, x, mine)
+		board().length.times do
+			|row|
+			board()[row].length.times do
+				|item|
+				if board()[row][item][0] == 'o' then
+					board()[row][item][0] = calcNum(board(), row, item)
+				end
+			end
+		end	
+		guess_loop()
+	end
+end
+
+main_loop()
