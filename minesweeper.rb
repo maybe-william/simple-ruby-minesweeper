@@ -80,10 +80,10 @@ class Minesweeper
       |x1|
       3.times do
         |y1|
-        x1 = x1-1
-        y1 = y1-1
-        x2 = x + x1
-        y2 = y + y1
+        x3 = x1-1
+        y3 = y1-1
+        x2 = x + x3
+        y2 = y + y3
         if x2 >= 0 and x2 < b.length then
           if y2 >= 0 and y2 < b[x2].length then
             if b[x2][y2][0] == 'x' then
