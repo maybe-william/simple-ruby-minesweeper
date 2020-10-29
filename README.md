@@ -19,7 +19,7 @@ This project was originally a self-imposed challenge to build a working game of 
 [![ruby-lint](https://img.shields.io/badge/code%20style-ruby--lint-green)](https://rubygems.org/gems/ruby-lint)
 
 ## Screenshots
-[![screenshot](https://github.com/maybe-william/simple-ruby-minesweeper/blob/master/minesweeper_screenshot.png)]
+![screenshot](https://github.com/maybe-william/simple-ruby-minesweeper/blob/master/minesweeper_screenshot.png)
 
 ## Tech used
 <b>Built with</b>
