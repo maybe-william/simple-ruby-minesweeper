@@ -1,17 +1,17 @@
 ## Simple Ruby Minesweeper
 A simple terminal minecraft game written in ruby
 
-##About me
+## About me
 Linkedin: https://www.linkedin.com/in/william-dyrland-marquis
 Twitter: https://www.twitter.com/notwilliam4
 Holberton School Foundations Portfolio Project: https://github.com/maybe-william/RocketRiders
 
 I'm a self-taught Computer Scientist of 10 years. As a generalist, my interests include a wide variety of things, both in computer science and in other areas of life, and this has resulted in a broad exploration of computers in general.
 
-##About this project
+## About this project
 This project was originally a self-imposed challenge to build a working game of minesweeper on a terminal in under an hour. After being successful in that challenge, I decided that I would like to try to improve the simple version of the game with extra features.
 
-##Challenges encountered
+## Challenges encountered
 - Coding the basic version in under 1 hour
 - A bug with calculating the number of mines around a square
 
