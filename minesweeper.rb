@@ -1,12 +1,15 @@
 #!/usr/bin/ruby
 
+### A Minesweeper instance simply holds the game
 class Minesweeper
+
+  ### @board holds each value, and whether or not that value is visible to the user
   @board = []
+  ### @lastGuess holds the last guess of the player for highlighting purposes
   @lastGuess = [-1, -1]
 
+  ### Returns the board and optionally creates it if it hasn't yet been created (indicated by 'set')
   def board(set=false, x=3, y=3, mines=0.5)
-    #return the board (basically a global variable)
-    #if set is true, generate a random board of x and y dimensions.
     board = @board
     if set
       @board = []
@@ -25,8 +28,8 @@ class Minesweeper
     return board
   end
 
+  ### Prints the board referenced by b
   def printBoard(b)
-    #print out a board
     b.length.times do
       |x|
       b[x].length.times do
@@ -49,8 +52,8 @@ class Minesweeper
     end
   end
 
+  ### Sets adjacent number squares to visible
   def showExtraSquares(b, x, y)
-    #show any connected number squares
     b[x][y][1] = true
     x1 = x-1
     y1 = y-1
@@ -71,8 +74,8 @@ class Minesweeper
     return
   end
 
+  ### Calculates the number of mines around a square
   def calcNum(b, x, y)
-    #get the num of mines around
     num = 0
     3.times do
       |x1|
@@ -95,8 +98,8 @@ class Minesweeper
     return num
   end
 
+  ### Returns true if only the mines are left hidden
   def won()
-    #return true if only xs are still hidden
     board().each do
       |row|
       row.each do
@@ -109,6 +112,7 @@ class Minesweeper
     return true
   end
 
+  ### Uncovers the entire board (in the case of a win or a loss)
   def uncover_all(b)
     b.each do
       |row|
@@ -120,8 +124,8 @@ class Minesweeper
     return b
   end
 
+  ### Uncover the guessed square and return true if not a mine, false if a mine
   def guess(b, x, y)
-    #return true if guess is good, false if mine
     @lastGuess = [x, y]
     if b[x][y][0] == 'x'
       b[x][y][1] = true
@@ -134,8 +138,8 @@ class Minesweeper
     end
   end
 
+  ### Inside a game, continuously ask for a guess until player wins or hits a mine
   def guess_loop()
-    #after game is initialized, loop asking for a guess each time. lose when guess is mine.
     safe = true
     win = false
     printBoard(board())
@@ -165,11 +169,11 @@ class Minesweeper
       puts "You Win!"
     end
 
-
     uncover_all(board())
     printBoard(board())
   end
 
+  ### Initialize game, delegate control to guess loop, notify of win or loss, and then repeat
   def main_loop()
     while true
       puts
@@ -195,7 +199,7 @@ class Minesweeper
             board()[row][item][0] = calcNum(board(), row, item)
           end
         end
-      end	
+      end
       guess_loop()
     end
   end
