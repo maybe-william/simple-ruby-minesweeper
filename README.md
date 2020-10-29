@@ -1,10 +1,10 @@
 ## Simple Ruby Minesweeper
-A simple terminal minecraft game written in ruby
+A simple terminal minesweeper game written in ruby
 
 ## About me
-Linkedin: https://www.linkedin.com/in/william-dyrland-marquis
-Twitter: https://www.twitter.com/notwilliam4
-Holberton School Foundations Portfolio Project: https://github.com/maybe-william/RocketRiders
+- Linkedin: https://www.linkedin.com/in/william-dyrland-marquis
+- Twitter: https://www.twitter.com/notwilliam4
+- Holberton School Foundations Portfolio Project: https://github.com/maybe-william/RocketRiders
 
 I'm a self-taught Computer Scientist of 10 years. As a generalist, my interests include a wide variety of things, both in computer science and in other areas of life, and this has resulted in a broad exploration of computers in general.
 
